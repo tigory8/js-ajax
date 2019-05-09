@@ -67,8 +67,23 @@ function submitForm(e) {
                                 .innerHTML = html );
 }
 
+document.querySelector('.exchange-rate').addEventListener('click', exchangeCourse);
 
+function exchangeCourse(e) {
+    e.preventDefault();
+    const fromCurrency = 'UAH';
+    const toCurrency = 'UAH';
+    const currKey = fromCurrency + '_' + toCurrency;   
+    fetch(`https://free.currencyconverterapi.com/api/v6/convert?q=${currKey}&compact=ultra&apiKey=bc96fbecdf0ae1153061`)
+        .then( response => response.json() )
+        .then( currency => {
+           const rate = currency[currKey];
+           document.querySelector('.converter output[name=curr-converted]')
+            .innerText = rate.toFixed(2);
+        });
+}
 
+/*
 document.querySelector('.curr-convert').addEventListener('click', currConvert);
     
 function currConvert(e) {
@@ -76,7 +91,7 @@ function currConvert(e) {
     const currFrom = document.querySelector('.converter input[name=curr-from]').value;
     const currTo = document.querySelector('.converter input[name=curr-to]').value;
     const currKey = currFrom + '_' + currTo;   
-    fetch(`https://free.currencyconverterapi.com/api/v6/convert?q=${currKey}&compact=ultra&apiKey=d1b5218e0be93e157106`)
+    fetch(`https://free.currencyconverterapi.com/api/v6/convert?q=${currKey}&compact=ultra&apiKey=bc96fbecdf0ae1153061`)
         .then( response => response.json() )
         .then( currency => {
            const rate = currency[currKey];
@@ -108,7 +123,8 @@ function loadText() {
 }
 
 
-document.querySelector('.get-json').addEventListener('click', getJson);
+ 
+ document.querySelector('.get-json').addEventListener('click', getJson);
 
 function getJson() {
     const xhr = new XMLHttpRequest();
@@ -122,3 +138,4 @@ function getJson() {
 /42.3601,-71.0589', true);
     xhr.send();
 }
+*/
