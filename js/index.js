@@ -86,3 +86,39 @@ function currConvert(e) {
             .innerText = convertedAmount.toFixed(2);
         });
 }
+
+
+
+
+const text = document.querySelector('textarea');
+
+document.querySelector('input[type=submit]')
+  .addEventListener('click', saveText);
+
+document.querySelector('.load')
+  .addEventListener('click', loadText);
+
+function saveText(e) {
+  e.preventDefault();
+  localStorage['text'] = text.value;
+}
+
+function loadText() {
+  text.value = localStorage['text'] || '';
+}
+
+
+document.querySelector('.get-json').addEventListener('click', getJson);
+
+function getJson() {
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XHR_DONE && xhr.status === HTTP_OK) {
+            const currentCource = JSON.parse(xhr.responseText);
+            document.querySelector('.current-cource').innerText = currentCource;
+        } 
+    }
+    xhr.open('GET', 'https://api.darksky.net/forecast/32a1ca8393d4f27f4b3d26d8ce8d288c
+/42.3601,-71.0589', true);
+    xhr.send();
+}
